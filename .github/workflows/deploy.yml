@@ -27,10 +27,18 @@ jobs:
         run: |
           echo "${{ secrets.AWS_SSH_KEY }}" > ssh-key.pem
           chmod 600 ssh-key.pem
+          # First ensure the target directory exists
+          ssh -o StrictHostKeyChecking=no -i ssh-key.pem ${{ secrets.AWS_USERNAME }}@${{ secrets.AWS_STATIC_IP }} "
+            mkdir -p /home/${{ secrets.AWS_USERNAME }}/igj-be"
+          
+          # Run the container with environment variables directly from secrets
           ssh -o StrictHostKeyChecking=no -i ssh-key.pem ${{ secrets.AWS_USERNAME }}@${{ secrets.AWS_STATIC_IP }} "
             sudo docker container rm -f ${{ secrets.CONTAINER_NAME }} || true &&
             sudo docker image rm -f ${{ secrets.REGISTRY_USER }}/${{ secrets.IMAGE_NAME }}:${{ secrets.IMAGE_TAG }} || true &&
             sudo docker run --name ${{ secrets.CONTAINER_NAME }} -d -p 80:8000 -p 5432:5432 \
-            --env-file /home/${{ secrets.AWS_USERNAME }}/igj-be/.env \
+            -e DATABASE_URL='${{ secrets.DATABASE_URL }}' \
+            -e API_KEY='${{ secrets.API_KEY }}' \
+            -e JWT_SECRET='${{ secrets.JWT_SECRET }}' \
             ${{ secrets.REGISTRY_USER }}/${{ secrets.IMAGE_NAME }}:${{ secrets.IMAGE_TAG }}"
+          
           rm -f ssh-key.pem
