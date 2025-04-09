@@ -35,7 +35,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i ssh-key.pem ${{ secrets.AWS_USERNAME }}@${{ secrets.AWS_STATIC_IP }} "
             sudo docker container rm -f ${{ secrets.CONTAINER_NAME }} || true &&
             sudo docker image rm -f ${{ secrets.REGISTRY_USER }}/${{ secrets.IMAGE_NAME }}:${{ secrets.IMAGE_TAG }} || true &&
-            sudo docker run --name ${{ secrets.CONTAINER_NAME }} -d -p 80:8000 -p 5432:5432 \
+            sudo docker run --name ${{ secrets.CONTAINER_NAME }} -d -p 80:8000 -p 5433:5432 \
             -e DATABASE_URL='${{ secrets.DATABASE_URL }}' \
             -e API_KEY='${{ secrets.API_KEY }}' \
             -e JWT_SECRET='${{ secrets.JWT_SECRET }}' \
