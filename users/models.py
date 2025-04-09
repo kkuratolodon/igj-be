@@ -19,14 +19,15 @@ class GameUserManager(BaseUserManager):
 
 class GameUser(AbstractBaseUser):
     username = models.CharField(max_length=30, unique=True)
+    display_name = models.CharField(max_length=50, default="Player", null=False, blank=False)
+    
     # Game progress
-    score = models.IntegerField(default=0)
-    level = models.IntegerField(default=1)
     last_completed_level = models.IntegerField(default=0)
+    tutorial_complete = models.BooleanField(default=False)
     
     # Player resources
     hp = models.IntegerField(default=100)
-    money = models.IntegerField(default=1000)
+    money = models.IntegerField(default=200)
     
     # Unit upgrade levels
     archer_level = models.IntegerField(default=1)
@@ -41,6 +42,7 @@ class GameUser(AbstractBaseUser):
     objects = GameUserManager()
     
     USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['display_name']
     
     def __str__(self):
         return self.username

@@ -91,8 +91,12 @@ WSGI_APPLICATION = 'gameapi.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'gamedb',
+        'USER': 'gameuser',
+        'PASSWORD': '12345',  # Gunakan password yang Anda set sebelumnya
+        'HOST': '54.255.152.114',  # IP publik server EC2 Anda
+        'PORT': '5432',
     }
 }
 

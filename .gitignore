@@ -9,6 +9,14 @@ media
 # Backup files # 
 *.bak 
 
+# SSH Keys #
+.ssh/
+*.pem
+id_rsa
+id_rsa.pub
+known_hosts
+authorized_keys
+
 # If you are using PyCharm # 
 # User-specific stuff
 .idea/**/workspace.xml

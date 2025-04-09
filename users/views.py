@@ -20,10 +20,13 @@ class RegisterView(APIView):
         if secret != settings.GAME_SECRET_KEY:
             return Response({"error": "Invalid secret key"}, status=status.HTTP_403_FORBIDDEN)
             
-        serializer = UserRegisterSerializer(data=request.data)
+        # Copy request data to avoid modifying the original
+        data = request.data.copy()
+        
+        serializer = UserRegisterSerializer(data=data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            user = serializer.save()
+            return Response(UserSerializer(user).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -84,7 +87,7 @@ class UpdateUserView(APIView):
                 user.username = new_username
             
             # Update other fields
-            for field in ['hp', 'money', 'level', 'score', 'last_completed_level',
+            for field in ['display_name', 'hp', 'money', 'last_completed_level', 'tutorial_complete',
                          'archer_level', 'catapult_level', 'magic_level', 'guardian_level']:
                 if field in serializer.validated_data:
                     setattr(user, field, serializer.validated_data[field])
