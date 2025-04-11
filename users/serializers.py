@@ -6,7 +6,7 @@ from .models import GameUser
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = GameUser
-        fields = ['id', 'username', 'display_name', 'hp', 'money', 'last_completed_level',
+        fields = ['id', 'username', 'display_name', 'hp', 'money', 'start_hp', 'start_money', 'last_completed_level',
                   'tutorial_complete', 'archer_level', 'catapult_level', 'magic_level', 
                   'guardian_level', 'created_at', 'updated_at']
         read_only_fields = ['id', 'created_at', 'updated_at']
@@ -40,7 +40,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = GameUser
-        fields = ['username', 'password', 'new_username', 'display_name', 'hp', 'money', 
+        fields = ['username', 'password', 'new_username', 'display_name', 'hp', 'money', 'start_hp', 'start_money',
                  'last_completed_level', 'tutorial_complete', 'archer_level', 
                  'catapult_level', 'magic_level', 'guardian_level']
         read_only_fields = ['username']

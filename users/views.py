@@ -85,9 +85,9 @@ class UpdateUserView(APIView):
             new_username = serializer.validated_data.get('new_username')
             if new_username:
                 user.username = new_username
-            
+            print(serializer.validated_data)
             # Update other fields
-            for field in ['display_name', 'hp', 'money', 'last_completed_level', 'tutorial_complete',
+            for field in ['display_name', 'hp', 'money', 'start_hp', 'start_money', 'last_completed_level', 'tutorial_complete',
                          'archer_level', 'catapult_level', 'magic_level', 'guardian_level']:
                 if field in serializer.validated_data:
                     setattr(user, field, serializer.validated_data[field])
