@@ -27,9 +27,9 @@ class GameUser(AbstractBaseUser):
     
     # Player resources
     hp = models.IntegerField(default=100)
-    money = models.IntegerField(default=200)
-    start_hp = models.IntegerField(default=100)
-    start_money = models.IntegerField(default=200)
+    money = models.IntegerField(default=0)
+    start_hp = models.IntegerField(default=1)
+    start_money = models.IntegerField(default=1)
     
     # Unit upgrade levels
     archer_level = models.IntegerField(default=1)
